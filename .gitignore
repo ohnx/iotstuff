@@ -1,0 +1,6 @@
+bsec_mpy/mpy_ld.py
+bsec_mpy/makeqstrdata.py
+bsec_mpy/__pycache__/*
+*.swp
+*.lib
+*.o
