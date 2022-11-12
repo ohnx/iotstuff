@@ -52,15 +52,19 @@ class MasonPyportalSensorAccessory {
           resp.on('end', () => {
 //            console.log(JSON.parse(data));
             data = JSON.parse(data);
+            if (data == null) data = false;
+//            console.log("data: ", data);
+
+//	    console.log(data ? "true" : "false", "temp" in data, (data && "temp" in data) ? -273 : data.temp, (data && "humidity" in data) ? 0 : data.humidity);
 
             this.service
               .setCharacteristic(this.Characteristic.AirQuality, this.Characteristic.AirQuality.UNKNOWN);
             this.service
               .setCharacteristic(this.Characteristic.VOCDensity, 1000);
             this.serviceTemp
-              .setCharacteristic(this.Characteristic.CurrentTemperature, data.temp);
+              .setCharacteristic(this.Characteristic.CurrentTemperature, (data && "temp" in data) ? data.temp : -273);
             this.serviceHum
-              .setCharacteristic(this.Characteristic.CurrentRelativeHumidity, data.humidity);
+              .setCharacteristic(this.Characteristic.CurrentRelativeHumidity, (data && "humidity" in data) ? data.humidity : 0);
           });
 
         }).on("error", (err) => {
